@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Find Meetup Groups</title>
+</head>
+<body>
+  <h2>Find Meetup Groups</h2>
+  <form class="js-form" action="">
+    <div class="formGroup">
+      <label for="location">City or Town</label>
+      <input class="js-input-location" id="location" type="text">
+      <div class="js-message-location"></div>
+    </div>
+
+    <div class="formGroup">
+      <label for="searchTerm">Search for Groups Related to ...</label>
+      <input class="js-input-searchTerm" id="searchTerm" type="text">
+      <div class="js-message-searchTerm"></div>
+    </div>
+
+    <button class="js-button" type="submit">Find People Like Me</button>
+  </form>
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
