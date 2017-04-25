@@ -1,17 +1,13 @@
 function getData(locationVal, searchTermVal) {
   var apiKey = '3534301459421e3859607540312e7c4f';
   var settings = {
-    // method or type
-    type: 'GET',
-    dataType: 'json',
+    method: 'GET',
+    dataType: 'jsonp',
     url: 'https://api.meetup.com/find/groups',
     data: {
       key: apiKey,
       location: locationVal,
       text: searchTermVal
-    },
-    headers: {
-      
     }
   };
   $.ajax(settings)
