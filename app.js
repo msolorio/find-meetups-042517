@@ -1,3 +1,18 @@
+function displayData(data, locationVal, searchTermVal) {
+  $('.resultsHeading').html('Groups in ' + locationVal + ' Related to ' + searchTermVal);
+
+  var meetups = data.data.map(function(meetup) {
+    return (
+      '<div class="meetup">\
+        <h3 class="meetupName">\
+          <a href="' + meetup.link + '" target="_blank">' + meetup.name + '</a>\
+        </h3>\
+      </div>'
+    );
+  });
+  $('.results').html(meetups);
+};
+
 function getData(locationVal, searchTermVal) {
   var apiKey = '3534301459421e3859607540312e7c4f';
   var settings = {
@@ -13,6 +28,8 @@ function getData(locationVal, searchTermVal) {
   $.ajax(settings)
     .done(function(data) {
       console.log('data:', data);
+      displayData(data, locationVal, searchTermVal);
+      clearInputs();
     })
     .fail(function(error) {
       console.error('error:', error);
@@ -24,6 +41,8 @@ function getData(locationVal, searchTermVal) {
 
 function displayErrorMessage(selector, errorMessage) {
   console.log('displaying error for:', selector, errorMessage);
+  $(selector).html(errorMessage);
+  if (!errorMessage) $(selector).hide();
 };
 
 function validateSingleInput(inputVal, errorMessageSelector, errorMessage) {
@@ -31,9 +50,15 @@ function validateSingleInput(inputVal, errorMessageSelector, errorMessage) {
     displayErrorMessage(errorMessageSelector, errorMessage);
     return false;
   } else {
+    displayErrorMessage(errorMessageSelector, '');
     return true;
   }
 };
+
+function clearInputs() {
+  $('.js-input-location').val('');
+  $('.js-input-searchTerm').val('');
+}
 
 function validateAllInputs(locationVal, searchTermVal) {
   var allInputsValid = true;
@@ -44,6 +69,14 @@ function validateAllInputs(locationVal, searchTermVal) {
     allInputsValid = false;
   }
   return allInputsValid;
+};
+
+function makeCapitalCase(stringValue) {
+  var wordsArray = stringValue.toLowerCase().split(' ');
+  formattedWordsArray = wordsArray.map(function(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  return formattedWordsArray.join(' ');
 };
 
 function getInputVals() {
@@ -60,8 +93,11 @@ function listenForFormSubmit() {
     event.preventDefault();
     
     var [locationVal, searchTermVal] = getInputVals();
+    locationVal = makeCapitalCase(locationVal);
     var formValid = validateAllInputs(locationVal, searchTermVal);
-    if (formValid) getData(locationVal, searchTermVal);
+    if (formValid) {
+      getData(locationVal, searchTermVal);
+    }
   });
 };
 
