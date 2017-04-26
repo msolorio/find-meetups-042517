@@ -14,7 +14,7 @@ function displayData(data, locationVal, searchTermVal) {
 };
 
 function getData(locationVal, searchTermVal) {
-  var apiKey = '3534301459421e3859607540312e7c4f';
+  var apiKey = '3534301459421e3859607540312e7c4f'; // not actual api key
   var settings = {
     method: 'GET',
     dataType: 'jsonp',
@@ -28,6 +28,10 @@ function getData(locationVal, searchTermVal) {
   $.ajax(settings)
     .done(function(data) {
       console.log('data:', data);
+      if (data.data.errors) {
+        displayErrorMessage('.results', 'Your request to the API has failed.');
+        return;
+      }
       displayData(data, locationVal, searchTermVal);
       clearInputs();
     })
@@ -43,6 +47,7 @@ function displayErrorMessage(selector, errorMessage) {
   console.log('displaying error for:', selector, errorMessage);
   $(selector).html(errorMessage);
   if (!errorMessage) $(selector).hide();
+  else $(selector).show();
 };
 
 function validateSingleInput(inputVal, errorMessageSelector, errorMessage) {
